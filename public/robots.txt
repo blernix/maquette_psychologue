@@ -1,0 +1,12 @@
+# robots.txt pour site de psychologue
+
+# Autoriser tous les robots à indexer le site
+User-agent: *
+Allow: /
+
+# Bloquer l'indexation de certains fichiers (optionnel)
+Disallow: /api/
+
+# Sitemap (Next.js génère automatiquement le sitemap)
+# Décommenter et adapter l'URL après déploiement :
+# Sitemap: https://votre-site.fr/sitemap.xml
