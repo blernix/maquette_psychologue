@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: { serverActions: false },
   // Export statique pour hébergement simple
   output: 'export',
 
