@@ -9,7 +9,13 @@ import Link from 'next/link'
 import Breadcrumb from '@/components/Breadcrumb'
 import Card from '@/components/Card'
 import InfoBox from '@/components/InfoBox'
-import { ProspectName, ProspectCity } from '@/components/ProspectPersonalization'
+import {
+  ProspectName,
+  ProspectCity,
+  ProspectStreet,
+  ProspectPostal,
+  ProspectEmail,
+} from '@/components/ProspectPersonalization'
 import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
@@ -92,18 +98,14 @@ export default function PolitiqueConfidentialitePage() {
                       <strong>N° ADELI :</strong> {siteConfig.professional.adeli}
                     </li>
                     <li>
-                      <strong>Adresse :</strong> {siteConfig.professional.address.street},{' '}
-                      {siteConfig.professional.address.postalCode}{' '}
+                      <strong>Adresse :</strong>{' '}
+                      <ProspectStreet fallback={siteConfig.professional.address.street} />,{' '}
+                      <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
                       <ProspectCity fallback={siteConfig.professional.address.city} />
                     </li>
                     <li>
                       <strong>Email :</strong>{' '}
-                      <a
-                        href={`mailto:${siteConfig.professional.email}`}
-                        className="text-primary-500 hover:text-primary-600 underline"
-                      >
-                        {siteConfig.professional.email}
-                      </a>
+                      <ProspectEmail className="text-primary-500 hover:text-primary-600 underline" />
                     </li>
                   </ul>
                 </div>
@@ -417,16 +419,12 @@ export default function PolitiqueConfidentialitePage() {
                     <ul className="list-none text-sm space-y-1">
                       <li>
                         <strong>Par email :</strong>{' '}
-                        <a
-                          href={`mailto:${siteConfig.professional.email}`}
-                          className="text-primary-500 hover:text-primary-600 underline"
-                        >
-                          {siteConfig.professional.email}
-                        </a>
+                        <ProspectEmail className="text-primary-500 hover:text-primary-600 underline" />
                       </li>
                       <li>
-                        <strong>Par courrier :</strong> {siteConfig.professional.address.street}
-                        , {siteConfig.professional.address.postalCode}{' '}
+                        <strong>Par courrier :</strong>{' '}
+                        <ProspectStreet fallback={siteConfig.professional.address.street} />,{' '}
+                        <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
                         <ProspectCity fallback={siteConfig.professional.address.city} />
                       </li>
                     </ul>
@@ -549,12 +547,7 @@ export default function PolitiqueConfidentialitePage() {
                 <ul className="list-none space-y-2 text-neutral-700">
                   <li>
                     <strong>Email :</strong>{' '}
-                    <a
-                      href={`mailto:${siteConfig.professional.email}`}
-                      className="text-primary-500 hover:text-primary-600 underline"
-                    >
-                      {siteConfig.professional.email}
-                    </a>
+                    <ProspectEmail className="text-primary-500 hover:text-primary-600 underline" />
                   </li>
                   <li>
                     <strong>Téléphone :</strong>{' '}
@@ -566,8 +559,9 @@ export default function PolitiqueConfidentialitePage() {
                     </a>
                   </li>
                   <li>
-                    <strong>Courrier :</strong> {siteConfig.professional.address.street},{' '}
-                    {siteConfig.professional.address.postalCode}{' '}
+                    <strong>Courrier :</strong>{' '}
+                    <ProspectStreet fallback={siteConfig.professional.address.street} />,{' '}
+                    <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
                     <ProspectCity fallback={siteConfig.professional.address.city} />
                   </li>
                 </ul>

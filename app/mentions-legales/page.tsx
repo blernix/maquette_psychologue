@@ -7,7 +7,13 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Breadcrumb from '@/components/Breadcrumb'
 import Card from '@/components/Card'
-import { ProspectName, ProspectCity } from '@/components/ProspectPersonalization'
+import {
+  ProspectName,
+  ProspectCity,
+  ProspectStreet,
+  ProspectPostal,
+  ProspectEmail,
+} from '@/components/ProspectPersonalization'
 import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
@@ -55,9 +61,9 @@ export default function MentionsLegalesPage() {
                 <p>
                   <strong>Adresse professionnelle :</strong>
                   <br />
-                  {siteConfig.professional.address.street}
+                  <ProspectStreet fallback={siteConfig.professional.address.street} />
                   <br />
-                  {siteConfig.professional.address.postalCode}{' '}
+                  <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
                   <ProspectCity fallback={siteConfig.professional.address.city} />
                 </p>
                 <p>
@@ -71,12 +77,7 @@ export default function MentionsLegalesPage() {
                 </p>
                 <p>
                   <strong>Email :</strong>{' '}
-                  <a
-                    href={`mailto:${siteConfig.professional.email}`}
-                    className="text-primary-500 hover:text-primary-600 underline"
-                  >
-                    {siteConfig.professional.email}
-                  </a>
+                  <ProspectEmail className="text-primary-500 hover:text-primary-600 underline" />
                 </p>
               </div>
             </Card>
@@ -286,21 +287,16 @@ export default function MentionsLegalesPage() {
                 </li>
                 <li>
                   <strong>Par email :</strong>{' '}
-                  <a
-                    href={`mailto:${siteConfig.professional.email}`}
-                    className="text-primary-500 hover:text-primary-600 underline"
-                  >
-                    {siteConfig.professional.email}
-                  </a>
+                  <ProspectEmail className="text-primary-500 hover:text-primary-600 underline" />
                 </li>
                 <li>
                   <strong>Par courrier :</strong>
                   <br />
                   <ProspectName fallback={siteConfig.professional.name} />
                   <br />
-                  {siteConfig.professional.address.street}
+                  <ProspectStreet fallback={siteConfig.professional.address.street} />
                   <br />
-                  {siteConfig.professional.address.postalCode}{' '}
+                  <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
                   <ProspectCity fallback={siteConfig.professional.address.city} />
                 </li>
               </ul>

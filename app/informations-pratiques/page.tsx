@@ -13,6 +13,9 @@ import { Button } from '@/components/Button'
 import {
   ProspectName,
   ProspectCity,
+  ProspectStreet,
+  ProspectPostal,
+  ProspectEmail,
   ProspectImage,
 } from '@/components/ProspectPersonalization'
 import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
@@ -25,7 +28,7 @@ export const metadata: Metadata = generatePageMetadata({
 })
 
 export default function InformationsPratiquesPage() {
-  const address = `${siteConfig.professional.address.street}, ${siteConfig.professional.address.postalCode} {ville}`
+  const address = '{adresse}, {code_postal} {ville}'
 
   return (
     <>
@@ -76,9 +79,11 @@ export default function InformationsPratiquesPage() {
                     <p className="font-semibold">
                       <ProspectName fallback="Cabinet Dr. Sophie Martin" />
                     </p>
-                    <p>{siteConfig.professional.address.street}</p>
                     <p>
-                      {siteConfig.professional.address.postalCode}{' '}
+                      <ProspectStreet fallback={siteConfig.professional.address.street} />
+                    </p>
+                    <p>
+                      <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
                       <ProspectCity fallback={siteConfig.professional.address.city} />
                     </p>
                   </address>
@@ -151,12 +156,7 @@ export default function InformationsPratiquesPage() {
                     </div>
                     <div>
                       <p className="text-sm text-neutral-600 mb-1">Email :</p>
-                      <a
-                        href={`mailto:${siteConfig.professional.email}`}
-                        className="text-primary-500 hover:text-primary-600 font-medium underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded break-all"
-                      >
-                        {siteConfig.professional.email}
-                      </a>
+                      <ProspectEmail className="text-primary-500 hover:text-primary-600 font-medium underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded break-all" />
                     </div>
                     <p className="text-sm text-neutral-600 mt-4">
                       Réponse sous 24-48 heures

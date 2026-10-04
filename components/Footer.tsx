@@ -4,7 +4,13 @@
 
 import Link from 'next/link'
 import { siteConfig } from '@/lib/seo'
-import { ProspectName, ProspectCity } from './ProspectPersonalization'
+import {
+  ProspectName,
+  ProspectCity,
+  ProspectStreet,
+  ProspectPostal,
+  ProspectEmail,
+} from './ProspectPersonalization'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -55,9 +61,9 @@ export default function Footer() {
                   />
                 </svg>
                 <span>
-                  {siteConfig.professional.address.street}
+                  <ProspectStreet fallback={siteConfig.professional.address.street} />
                   <br />
-                  {siteConfig.professional.address.postalCode}{' '}
+                  <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
                   <ProspectCity fallback={siteConfig.professional.address.city} />
                 </span>
               </p>
@@ -100,12 +106,7 @@ export default function Footer() {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
-                <a
-                  href={`mailto:${siteConfig.professional.email}`}
-                  className="hover:text-white transition-colors underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded"
-                >
-                  {siteConfig.professional.email}
-                </a>
+                <ProspectEmail className="hover:text-white transition-colors underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded" />
               </p>
             </address>
           </div>

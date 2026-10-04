@@ -11,8 +11,13 @@ import Testimonial from '@/components/Testimonial'
 import Card from '@/components/Card'
 import InfoBox from '@/components/InfoBox'
 import { Button } from '@/components/Button'
-import { ProspectName, ProspectCity } from '@/components/ProspectPersonalization'
-import { generateMetadata as generatePageMetadata } from '@/lib/seo'
+import {
+  ProspectName,
+  ProspectCity,
+  ProspectStreet,
+  ProspectPostal,
+} from '@/components/ProspectPersonalization'
+import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
   title: 'Accueil',
@@ -363,9 +368,10 @@ export default function HomePage() {
                   Adresse
                 </h3>
                 <p className="text-neutral-700">
-                  25 rue de la République
+                  <ProspectStreet fallback={siteConfig.professional.address.street} />
                   <br />
-                  69003 <ProspectCity />
+                  <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
+                  <ProspectCity />
                 </p>
                 <p className="text-sm text-neutral-600 mt-2">
                   Métro : Ligne B - Place Guichard

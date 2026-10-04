@@ -8,6 +8,7 @@ import Breadcrumb from '@/components/Breadcrumb'
 import ContactForm from '@/components/ContactForm'
 import Card from '@/components/Card'
 import InfoBox from '@/components/InfoBox'
+import { ProspectEmail } from '@/components/ProspectPersonalization'
 import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
@@ -68,12 +69,7 @@ export default function PrendreRendezVousPage() {
                   </div>
                   <div>
                     <p className="text-neutral-600 mb-1">Email :</p>
-                    <a
-                      href={`mailto:${siteConfig.professional.email}`}
-                      className="text-primary-500 hover:text-primary-600 font-medium underline break-all"
-                    >
-                      {siteConfig.professional.email}
-                    </a>
+                    <ProspectEmail className="text-primary-500 hover:text-primary-600 font-medium underline break-all" />
                   </div>
                 </div>
               </Card>

@@ -13,6 +13,7 @@ import {
   PROSPECT_NAME_FALLBACK,
   useProspectIdentity,
 } from './ProspectPersonalization'
+import { siteConfig } from '@/lib/seo'
 
 export interface MapProps {
   address: string
@@ -23,8 +24,12 @@ export default function Map({
   address,
   title = 'Localisation du cabinet',
 }: MapProps) {
-  const { nom, ville } = useProspectIdentity()
+  const { nom, ville, adresse, code_postal } = useProspectIdentity()
   const resolvedAddress = address
+    .split('{adresse}')
+    .join(adresse ?? siteConfig.professional.address.street)
+    .split('{code_postal}')
+    .join(code_postal ?? siteConfig.professional.address.postalCode)
     .split('{ville}')
     .join(ville ?? PROSPECT_CITY_FALLBACK)
   const resolvedTitle = title.split('{nom}').join(nom ?? PROSPECT_NAME_FALLBACK)
