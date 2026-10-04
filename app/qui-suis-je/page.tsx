@@ -10,7 +10,7 @@ import Card from '@/components/Card'
 import InfoBox from '@/components/InfoBox'
 import { Button } from '@/components/Button'
 import {
-  ProspectName,
+  ProspectPractitionerName,
   ProspectCity,
   ProspectImage,
 } from '@/components/ProspectPersonalization'
@@ -60,7 +60,7 @@ export default function QuiSuisJePage() {
 
                 <Card>
                   <h3 className="font-semibold text-neutral-900 mb-2">
-                    <ProspectName fallback={siteConfig.professional.name} />
+                    <ProspectPractitionerName />
                   </h3>
                   <p className="text-sm text-neutral-600 mb-4">Psychologue Clinicienne</p>
 

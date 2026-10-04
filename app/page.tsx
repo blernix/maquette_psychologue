@@ -12,7 +12,7 @@ import Card from '@/components/Card'
 import InfoBox from '@/components/InfoBox'
 import { Button } from '@/components/Button'
 import {
-  ProspectName,
+  ProspectPractitionerName,
   ProspectCity,
   ProspectAddress,
   ProspectAcces,
@@ -37,7 +37,7 @@ export default function HomePage() {
         title="Bienvenue dans votre espace de bien-être"
         subtitle={
           <>
-            <ProspectName />, Psychologue Clinicienne
+            <ProspectPractitionerName />, Psychologue Clinicienne
           </>
         }
         description="Je vous accompagne avec bienveillance et professionnalisme dans vos difficultés personnelles, relationnelles et émotionnelles."

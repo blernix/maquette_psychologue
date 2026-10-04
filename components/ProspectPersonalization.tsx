@@ -101,6 +101,40 @@ export function ProspectName({ fallback = PROSPECT_NAME_FALLBACK }: ProspectText
 }
 
 /**
+ * Normalise une valeur pour comparaison : minuscules, sans accents.
+ */
+function normalizeForComparison(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+}
+
+/**
+ * Nom personnel du praticien (« Dr … »), à partir de `nom` et `prenom`.
+ *
+ * - Aucun `nom` fourni : rien n'est rendu (bloc masqué, jamais de valeur
+ *   inventée).
+ * - `prenom` fourni mais absent du début de `nom` (comparaison insensible à la
+ *   casse et aux accents) : `prenom + ' ' + nom`.
+ * - `nom` commençant déjà par `prenom` : `nom` seul (aucun doublon).
+ * - Préfixe « Dr » ajouté au résultat. Rendu texte uniquement.
+ */
+export function ProspectPractitionerName() {
+  const { nom, prenom } = useProspectIdentity()
+  if (!nom) return null
+
+  const normalizedNom = normalizeForComparison(nom)
+  const normalizedPrenom = prenom ? normalizeForComparison(prenom) : ''
+  const combined =
+    prenom && normalizedPrenom && !normalizedNom.startsWith(normalizedPrenom)
+      ? `${prenom} ${nom}`
+      : nom
+
+  return <>{`Dr ${combined.slice(0, MAX_LENGTH)}`}</>
+}
+
+/**
  * Affiche la ville du prospect (`ville`), sinon la ville fictive.
  */
 export function ProspectCity({ fallback = PROSPECT_CITY_FALLBACK }: ProspectTextProps) {
