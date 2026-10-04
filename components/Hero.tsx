@@ -2,12 +2,14 @@
  * Composant Hero pour la section d'accueil
  */
 
+import type { ReactNode } from 'react'
 import { Button } from './Button'
+import { ProspectImage } from './ProspectPersonalization'
 import Link from 'next/link'
 
 export interface HeroProps {
   title: string
-  subtitle?: string
+  subtitle?: ReactNode
   description?: string
   ctaText?: string
   ctaHref?: string
@@ -72,7 +74,7 @@ export default function Hero({
           {imageSrc && (
             <div className="relative animate-slide-up" style={{ animationDelay: '0.1s' }}>
               <div className="aspect-square lg:aspect-auto lg:h-[500px] rounded-2xl overflow-hidden shadow-medium">
-                <img
+                <ProspectImage
                   src={imageSrc}
                   alt={imageAlt || ''}
                   className="w-full h-full object-cover"

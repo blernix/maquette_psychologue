@@ -9,7 +9,12 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Card from '@/components/Card'
 import InfoBox from '@/components/InfoBox'
 import { Button } from '@/components/Button'
-import { generateMetadata as generatePageMetadata } from '@/lib/seo'
+import {
+  ProspectName,
+  ProspectCity,
+  ProspectImage,
+} from '@/components/ProspectPersonalization'
+import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
   title: 'Qui suis-je ?',
@@ -45,15 +50,18 @@ export default function QuiSuisJePage() {
             <div className="lg:col-span-1">
               <div className="sticky top-24">
                 <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-medium mb-6">
-                  <img
+                  <ProspectImage
                     src="/images/profil.png"
-                    alt="Dr. Sophie Martin, Psychologue Clinicienne"
+                    alt="{nom}, Psychologue Clinicienne"
+                    fallbackName={siteConfig.professional.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
 
                 <Card>
-                  <h3 className="font-semibold text-neutral-900 mb-2">Dr. Sophie Martin</h3>
+                  <h3 className="font-semibold text-neutral-900 mb-2">
+                    <ProspectName fallback={siteConfig.professional.name} />
+                  </h3>
                   <p className="text-sm text-neutral-600 mb-4">Psychologue Clinicienne</p>
 
                   <div className="text-sm space-y-2 text-neutral-700">
@@ -88,7 +96,7 @@ export default function QuiSuisJePage() {
                   <p>
                     Mon parcours professionnel m'a amenée à travailler dans différents contextes :
                     services hospitaliers de psychiatrie, centre médico-psychologique (CMP), et
-                    depuis 2015, en cabinet libéral à Lyon 3ème.
+                    depuis 2015, en cabinet libéral à <ProspectCity fallback="Lyon 3ème" />.
                   </p>
                   <p>
                     Cette diversité d'expériences m'a permis d'accompagner des publics variés
