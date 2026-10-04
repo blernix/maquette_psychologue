@@ -111,14 +111,15 @@ function normalizeForComparison(value: string): string {
 }
 
 /**
- * Nom personnel du praticien (« Dr … »), à partir de `nom` et `prenom`.
+ * Nom personnel du praticien, à partir de `nom` et `prenom`.
  *
  * - Aucun `nom` fourni : rien n'est rendu (bloc masqué, jamais de valeur
  *   inventée).
  * - `prenom` fourni mais absent du début de `nom` (comparaison insensible à la
  *   casse et aux accents) : `prenom + ' ' + nom`.
  * - `nom` commençant déjà par `prenom` : `nom` seul (aucun doublon).
- * - Préfixe « Dr » ajouté au résultat. Rendu texte uniquement.
+ * - Aucun titre (ni « Dr », ni « Dr. », ni « Mme », ni « M. »). Rendu texte
+ *   uniquement.
  */
 export function ProspectPractitionerName() {
   const { nom, prenom } = useProspectIdentity()
@@ -131,7 +132,7 @@ export function ProspectPractitionerName() {
       ? `${prenom} ${nom}`
       : nom
 
-  return <>{`Dr ${combined.slice(0, MAX_LENGTH)}`}</>
+  return <>{combined.slice(0, MAX_LENGTH)}</>
 }
 
 /**
