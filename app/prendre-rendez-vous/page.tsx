@@ -8,8 +8,8 @@ import Breadcrumb from '@/components/Breadcrumb'
 import ContactForm from '@/components/ContactForm'
 import Card from '@/components/Card'
 import InfoBox from '@/components/InfoBox'
-import { ProspectEmail } from '@/components/ProspectPersonalization'
-import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
+import { ProspectEmail, ProspectPhone, IfProspectPhone } from '@/components/ProspectPersonalization'
+import { generateMetadata as generatePageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
   title: 'Prendre rendez-vous',
@@ -58,15 +58,12 @@ export default function PrendreRendezVousPage() {
                   Autres moyens de contact
                 </h3>
                 <div className="space-y-3 text-sm">
-                  <div>
-                    <p className="text-neutral-600 mb-1">Téléphone :</p>
-                    <a
-                      href={`tel:${siteConfig.professional.phone.replace(/\s/g, '')}`}
-                      className="text-primary-500 hover:text-primary-600 font-medium underline"
-                    >
-                      {siteConfig.professional.phone}
-                    </a>
-                  </div>
+                  <IfProspectPhone>
+                    <div>
+                      <p className="text-neutral-600 mb-1">Téléphone :</p>
+                      <ProspectPhone className="text-primary-500 hover:text-primary-600 font-medium underline" />
+                    </div>
+                  </IfProspectPhone>
                   <div>
                     <p className="text-neutral-600 mb-1">Email :</p>
                     <ProspectEmail className="text-primary-500 hover:text-primary-600 font-medium underline break-all" />

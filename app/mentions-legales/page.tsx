@@ -9,10 +9,12 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Card from '@/components/Card'
 import {
   ProspectName,
-  ProspectCity,
-  ProspectStreet,
-  ProspectPostal,
   ProspectEmail,
+  ProspectAddress,
+  ProspectAddressInline,
+  ProspectPhone,
+  IfProspectAddress,
+  IfProspectPhone,
 } from '@/components/ProspectPersonalization'
 import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
 
@@ -58,23 +60,19 @@ export default function MentionsLegalesPage() {
                 <p>
                   <strong>SIRET :</strong> {siteConfig.professional.siret}
                 </p>
-                <p>
-                  <strong>Adresse professionnelle :</strong>
-                  <br />
-                  <ProspectStreet fallback={siteConfig.professional.address.street} />
-                  <br />
-                  <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
-                  <ProspectCity fallback={siteConfig.professional.address.city} />
-                </p>
-                <p>
-                  <strong>Téléphone :</strong>{' '}
-                  <a
-                    href={`tel:${siteConfig.professional.phone.replace(/\s/g, '')}`}
-                    className="text-primary-500 hover:text-primary-600 underline"
-                  >
-                    {siteConfig.professional.phone}
-                  </a>
-                </p>
+                <IfProspectAddress>
+                  <p>
+                    <strong>Adresse professionnelle :</strong>
+                    <br />
+                    <ProspectAddress className="not-italic" />
+                  </p>
+                </IfProspectAddress>
+                <IfProspectPhone>
+                  <p>
+                    <strong>Téléphone :</strong>{' '}
+                    <ProspectPhone className="text-primary-500 hover:text-primary-600 underline" />
+                  </p>
+                </IfProspectPhone>
                 <p>
                   <strong>Email :</strong>{' '}
                   <ProspectEmail className="text-primary-500 hover:text-primary-600 underline" />
@@ -276,29 +274,25 @@ export default function MentionsLegalesPage() {
                 :
               </p>
               <ul className="list-none space-y-2 mt-4 text-neutral-700">
-                <li>
-                  <strong>Par téléphone :</strong>{' '}
-                  <a
-                    href={`tel:${siteConfig.professional.phone.replace(/\s/g, '')}`}
-                    className="text-primary-500 hover:text-primary-600 underline"
-                  >
-                    {siteConfig.professional.phone}
-                  </a>
-                </li>
+                <IfProspectPhone>
+                  <li>
+                    <strong>Par téléphone :</strong>{' '}
+                    <ProspectPhone className="text-primary-500 hover:text-primary-600 underline" />
+                  </li>
+                </IfProspectPhone>
                 <li>
                   <strong>Par email :</strong>{' '}
                   <ProspectEmail className="text-primary-500 hover:text-primary-600 underline" />
                 </li>
-                <li>
-                  <strong>Par courrier :</strong>
-                  <br />
-                  <ProspectName fallback={siteConfig.professional.name} />
-                  <br />
-                  <ProspectStreet fallback={siteConfig.professional.address.street} />
-                  <br />
-                  <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
-                  <ProspectCity fallback={siteConfig.professional.address.city} />
-                </li>
+                <IfProspectAddress>
+                  <li>
+                    <strong>Par courrier :</strong>
+                    <br />
+                    <ProspectName fallback={siteConfig.professional.name} />
+                    <br />
+                    <ProspectAddressInline />
+                  </li>
+                </IfProspectAddress>
               </ul>
             </Card>
 

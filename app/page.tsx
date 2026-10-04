@@ -14,10 +14,13 @@ import { Button } from '@/components/Button'
 import {
   ProspectName,
   ProspectCity,
-  ProspectStreet,
-  ProspectPostal,
+  ProspectAddress,
+  ProspectAcces,
+  IfProspectAddress,
+  IfNoProspect,
+  IfProspectAcces,
 } from '@/components/ProspectPersonalization'
-import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
+import { generateMetadata as generatePageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
   title: 'Accueil',
@@ -344,41 +347,43 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <Card padding="lg">
-                <h3 className="text-xl font-semibold text-neutral-900 mb-4 flex items-center gap-2">
-                  <svg
-                    className="w-6 h-6 text-primary-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  Adresse
-                </h3>
-                <p className="text-neutral-700">
-                  <ProspectStreet fallback={siteConfig.professional.address.street} />
-                  <br />
-                  <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
-                  <ProspectCity />
-                </p>
-                <p className="text-sm text-neutral-600 mt-2">
-                  Métro : Ligne B - Place Guichard
-                  <br />
-                  Accès PMR
-                </p>
-              </Card>
+              <IfProspectAddress>
+                <Card padding="lg">
+                  <h3 className="text-xl font-semibold text-neutral-900 mb-4 flex items-center gap-2">
+                    <svg
+                      className="w-6 h-6 text-primary-500"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                    Adresse
+                  </h3>
+                  <ProspectAddress className="text-neutral-700 not-italic" />
+                  <IfProspectAcces>
+                    <ProspectAcces className="text-sm text-neutral-600 mt-2" />
+                  </IfProspectAcces>
+                  <IfNoProspect>
+                    <p className="text-sm text-neutral-600 mt-2">
+                      Métro : Ligne B - Place Guichard
+                      <br />
+                      Accès PMR
+                    </p>
+                  </IfNoProspect>
+                </Card>
+              </IfProspectAddress>
 
               <Card padding="lg">
                 <h3 className="text-xl font-semibold text-neutral-900 mb-4 flex items-center gap-2">

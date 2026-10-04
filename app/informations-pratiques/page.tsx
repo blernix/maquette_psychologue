@@ -12,13 +12,17 @@ import Map from '@/components/Map'
 import { Button } from '@/components/Button'
 import {
   ProspectName,
-  ProspectCity,
-  ProspectStreet,
-  ProspectPostal,
   ProspectEmail,
+  ProspectAddress,
+  ProspectPhone,
+  ProspectAcces,
   ProspectImage,
+  IfProspectAddress,
+  IfProspectPhone,
+  IfNoProspect,
+  IfProspectAcces,
 } from '@/components/ProspectPersonalization'
-import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
+import { generateMetadata as generatePageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
   title: 'Informations pratiques',
@@ -28,8 +32,6 @@ export const metadata: Metadata = generatePageMetadata({
 })
 
 export default function InformationsPratiquesPage() {
-  const address = '{adresse}, {code_postal} {ville}'
-
   return (
     <>
       {/* Hero */}
@@ -53,43 +55,39 @@ export default function InformationsPratiquesPage() {
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             {/* Adresse */}
-            <Card hover padding="lg">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary-100 text-primary-500 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
+            <IfProspectAddress>
+              <Card hover padding="lg">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-full bg-primary-100 text-primary-500 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-heading font-bold text-neutral-900 mb-3">
+                      Adresse du cabinet
+                    </h2>
+                    <address className="not-italic text-neutral-700 space-y-2">
+                      <p className="font-semibold">
+                        <ProspectName fallback="Cabinet Dr. Sophie Martin" />
+                      </p>
+                      <ProspectAddress />
+                    </address>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h2 className="text-2xl font-heading font-bold text-neutral-900 mb-3">
-                    Adresse du cabinet
-                  </h2>
-                  <address className="not-italic text-neutral-700 space-y-2">
-                    <p className="font-semibold">
-                      <ProspectName fallback="Cabinet Dr. Sophie Martin" />
-                    </p>
-                    <p>
-                      <ProspectStreet fallback={siteConfig.professional.address.street} />
-                    </p>
-                    <p>
-                      <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
-                      <ProspectCity fallback={siteConfig.professional.address.city} />
-                    </p>
-                  </address>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </IfProspectAddress>
 
             {/* Horaires */}
             <Card hover padding="lg">
@@ -145,15 +143,12 @@ export default function InformationsPratiquesPage() {
                     Contact
                   </h2>
                   <div className="space-y-3 text-neutral-700">
-                    <div>
-                      <p className="text-sm text-neutral-600 mb-1">Téléphone :</p>
-                      <a
-                        href={`tel:${siteConfig.professional.phone.replace(/\s/g, '')}`}
-                        className="text-primary-500 hover:text-primary-600 font-medium underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded"
-                      >
-                        {siteConfig.professional.phone}
-                      </a>
-                    </div>
+                    <IfProspectPhone>
+                      <div>
+                        <p className="text-sm text-neutral-600 mb-1">Téléphone :</p>
+                        <ProspectPhone className="text-primary-500 hover:text-primary-600 font-medium underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded" />
+                      </div>
+                    </IfProspectPhone>
                     <div>
                       <p className="text-sm text-neutral-600 mb-1">Email :</p>
                       <ProspectEmail className="text-primary-500 hover:text-primary-600 font-medium underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded break-all" />
@@ -167,44 +162,69 @@ export default function InformationsPratiquesPage() {
             </Card>
 
             {/* Accès */}
-            <Card hover padding="lg">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary-100 text-primary-500 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+            <IfProspectAcces>
+              <Card hover padding="lg">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-full bg-primary-100 text-primary-500 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-heading font-bold text-neutral-900 mb-3">
+                      Accès et transports
+                    </h2>
+                    <ProspectAcces className="text-neutral-700 text-sm" />
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h2 className="text-2xl font-heading font-bold text-neutral-900 mb-3">
-                    Accès et transports
-                  </h2>
-                  <div className="space-y-2 text-neutral-700 text-sm">
-                    <div>
-                      <p className="font-medium text-neutral-900">Métro :</p>
-                      <p>Ligne B - Arrêt Place Guichard (5 min à pied)</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-neutral-900">Bus :</p>
-                      <p>Lignes C3, C13, C16 - Arrêt Lacassagne</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-neutral-900">Parking :</p>
-                      <p>Parking public Place Guichard</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-neutral-900">Accessibilité :</p>
-                      <p>✓ Accès PMR (personnes à mobilité réduite)</p>
-                      <p>✓ Ascenseur disponible</p>
+              </Card>
+            </IfProspectAcces>
+
+            <IfNoProspect>
+              <Card hover padding="lg">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-full bg-primary-100 text-primary-500 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-heading font-bold text-neutral-900 mb-3">
+                      Accès et transports
+                    </h2>
+                    <div className="space-y-2 text-neutral-700 text-sm">
+                      <div>
+                        <p className="font-medium text-neutral-900">Métro :</p>
+                        <p>Ligne B - Arrêt Place Guichard (5 min à pied)</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-neutral-900">Bus :</p>
+                        <p>Lignes C3, C13, C16 - Arrêt Lacassagne</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-neutral-900">Parking :</p>
+                        <p>Parking public Place Guichard</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-neutral-900">Accessibilité :</p>
+                        <p>✓ Accès PMR (personnes à mobilité réduite)</p>
+                        <p>✓ Ascenseur disponible</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            </IfNoProspect>
           </div>
 
           {/* Photo du cabinet */}
@@ -223,12 +243,14 @@ export default function InformationsPratiquesPage() {
           </div>
 
           {/* Carte Google Maps */}
-          <div className="mb-12">
-            <h2 className="text-3xl font-heading font-bold text-neutral-900 mb-6 text-center">
-              Localisation
-            </h2>
-            <Map address={address} title="Localisation du cabinet {nom}" />
-          </div>
+          <IfProspectAddress>
+            <div className="mb-12">
+              <h2 className="text-3xl font-heading font-bold text-neutral-900 mb-6 text-center">
+                Localisation
+              </h2>
+              <Map title="Localisation du cabinet" />
+            </div>
+          </IfProspectAddress>
         </div>
       </section>
 

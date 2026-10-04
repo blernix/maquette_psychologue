@@ -1,45 +1,29 @@
 'use client'
 
 /**
- * Composant Map pour afficher une carte Google Maps
- * Utilise un iframe pour une solution simple et accessible
+ * Composant Map pour afficher une carte Google Maps.
+ * Utilise un iframe pour une solution simple et accessible.
  *
- * Les jetons `{nom}` et `{ville}` dans `address` / `title` sont remplacés par
- * l'identité du prospect issue de l'URL, sinon par la valeur fictive actuelle.
+ * L'adresse et le lien sont déduits de l'identité du prospect issue de l'URL,
+ * et JAMAIS des coordonnées de démonstration : si aucune localisation n'est
+ * connue sur une page personnalisée, la carte et le lien sont masqués.
  */
 
-import {
-  PROSPECT_CITY_FALLBACK,
-  PROSPECT_NAME_FALLBACK,
-  useProspectIdentity,
-} from './ProspectPersonalization'
-import { siteConfig } from '@/lib/seo'
+import { useProspectContact } from './ProspectPersonalization'
 
 export interface MapProps {
-  address: string
+  /** Conservé pour compatibilité ; ignoré au profit des coordonnées résolues. */
+  address?: string
   title?: string
 }
 
-export default function Map({
-  address,
-  title = 'Localisation du cabinet',
-}: MapProps) {
-  const { nom, ville, adresse, code_postal } = useProspectIdentity()
-  const resolvedAddress = address
-    .split('{adresse}')
-    .join(adresse ?? siteConfig.professional.address.street)
-    .split('{code_postal}')
-    .join(code_postal ?? siteConfig.professional.address.postalCode)
-    .split('{ville}')
-    .join(ville ?? PROSPECT_CITY_FALLBACK)
-  const resolvedTitle = title.split('{nom}').join(nom ?? PROSPECT_NAME_FALLBACK)
+export default function Map({ title = 'Localisation du cabinet' }: MapProps) {
+  const { addressOneLine, mapHref } = useProspectContact()
 
-  // Encoder l'adresse pour l'URL
-  const encodedAddress = encodeURIComponent(resolvedAddress)
+  if (!addressOneLine || !mapHref) return null
+
+  const encodedAddress = encodeURIComponent(addressOneLine)
   const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${encodedAddress}`
-
-  // URL pour ouvrir dans Google Maps
-  const openInMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`
 
   return (
     <div className="rounded-xl overflow-hidden shadow-medium">
@@ -53,8 +37,8 @@ export default function Map({
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title={resolvedTitle}
-            aria-label={`Carte montrant l'emplacement : ${resolvedAddress}`}
+            title={title}
+            aria-label={`Carte montrant l'emplacement : ${addressOneLine}`}
           />
         ) : (
           // Fallback si pas de clé API
@@ -79,9 +63,9 @@ export default function Map({
                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>
-            <p className="text-neutral-700 font-medium mb-2">{resolvedAddress}</p>
+            <p className="text-neutral-700 font-medium mb-2">{addressOneLine}</p>
             <a
-              href={openInMapsUrl}
+              href={mapHref}
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary-500 hover:text-primary-600 underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded px-2 py-1"
@@ -95,7 +79,7 @@ export default function Map({
       {/* Lien pour ouvrir dans l'application Google Maps */}
       <div className="bg-neutral-50 px-6 py-4 border-t border-neutral-200">
         <a
-          href={openInMapsUrl}
+          href={mapHref}
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-primary-500 hover:text-primary-600 font-medium inline-flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded px-2 py-1"

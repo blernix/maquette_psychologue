@@ -11,10 +11,11 @@ import Card from '@/components/Card'
 import InfoBox from '@/components/InfoBox'
 import {
   ProspectName,
-  ProspectCity,
-  ProspectStreet,
-  ProspectPostal,
   ProspectEmail,
+  ProspectAddressInline,
+  ProspectPhone,
+  IfProspectAddress,
+  IfProspectPhone,
 } from '@/components/ProspectPersonalization'
 import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
 
@@ -97,12 +98,11 @@ export default function PolitiqueConfidentialitePage() {
                     <li>
                       <strong>N° ADELI :</strong> {siteConfig.professional.adeli}
                     </li>
-                    <li>
-                      <strong>Adresse :</strong>{' '}
-                      <ProspectStreet fallback={siteConfig.professional.address.street} />,{' '}
-                      <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
-                      <ProspectCity fallback={siteConfig.professional.address.city} />
-                    </li>
+                    <IfProspectAddress>
+                      <li>
+                        <strong>Adresse :</strong> <ProspectAddressInline />
+                      </li>
+                    </IfProspectAddress>
                     <li>
                       <strong>Email :</strong>{' '}
                       <ProspectEmail className="text-primary-500 hover:text-primary-600 underline" />
@@ -421,12 +421,11 @@ export default function PolitiqueConfidentialitePage() {
                         <strong>Par email :</strong>{' '}
                         <ProspectEmail className="text-primary-500 hover:text-primary-600 underline" />
                       </li>
-                      <li>
-                        <strong>Par courrier :</strong>{' '}
-                        <ProspectStreet fallback={siteConfig.professional.address.street} />,{' '}
-                        <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
-                        <ProspectCity fallback={siteConfig.professional.address.city} />
-                      </li>
+                      <IfProspectAddress>
+                        <li>
+                          <strong>Par courrier :</strong> <ProspectAddressInline />
+                        </li>
+                      </IfProspectAddress>
                     </ul>
                     <p className="text-xs text-neutral-600 mt-3">
                       Une pièce d'identité pourra vous être demandée pour vérifier votre identité.
@@ -549,21 +548,17 @@ export default function PolitiqueConfidentialitePage() {
                     <strong>Email :</strong>{' '}
                     <ProspectEmail className="text-primary-500 hover:text-primary-600 underline" />
                   </li>
-                  <li>
-                    <strong>Téléphone :</strong>{' '}
-                    <a
-                      href={`tel:${siteConfig.professional.phone.replace(/\s/g, '')}`}
-                      className="text-primary-500 hover:text-primary-600 underline"
-                    >
-                      {siteConfig.professional.phone}
-                    </a>
-                  </li>
-                  <li>
-                    <strong>Courrier :</strong>{' '}
-                    <ProspectStreet fallback={siteConfig.professional.address.street} />,{' '}
-                    <ProspectPostal fallback={siteConfig.professional.address.postalCode} />{' '}
-                    <ProspectCity fallback={siteConfig.professional.address.city} />
-                  </li>
+                  <IfProspectPhone>
+                    <li>
+                      <strong>Téléphone :</strong>{' '}
+                      <ProspectPhone className="text-primary-500 hover:text-primary-600 underline" />
+                    </li>
+                  </IfProspectPhone>
+                  <IfProspectAddress>
+                    <li>
+                      <strong>Courrier :</strong> <ProspectAddressInline />
+                    </li>
+                  </IfProspectAddress>
                 </ul>
               </Card>
             </div>
