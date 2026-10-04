@@ -113,17 +113,17 @@ function normalizeForComparison(value: string): string {
 /**
  * Nom personnel du praticien, à partir de `nom` et `prenom`.
  *
- * - Aucun `nom` fourni : rien n'est rendu (bloc masqué, jamais de valeur
- *   inventée).
+ * - Aucun `nom` fourni : `fallback` est rendu tel quel, sans transformation ni
+ *   titre.
  * - `prenom` fourni mais absent du début de `nom` (comparaison insensible à la
  *   casse et aux accents) : `prenom + ' ' + nom`.
  * - `nom` commençant déjà par `prenom` : `nom` seul (aucun doublon).
  * - Aucun titre (ni « Dr », ni « Dr. », ni « Mme », ni « M. »). Rendu texte
  *   uniquement.
  */
-export function ProspectPractitionerName() {
+export function ProspectPractitionerName({ fallback = PROSPECT_NAME_FALLBACK }: ProspectTextProps) {
   const { nom, prenom } = useProspectIdentity()
-  if (!nom) return null
+  if (!nom) return <>{fallback}</>
 
   const normalizedNom = normalizeForComparison(nom)
   const normalizedPrenom = prenom ? normalizeForComparison(prenom) : ''
