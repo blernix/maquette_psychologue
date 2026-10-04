@@ -9,6 +9,7 @@ import Link from 'next/link'
 import Breadcrumb from '@/components/Breadcrumb'
 import Card from '@/components/Card'
 import InfoBox from '@/components/InfoBox'
+import { ProspectName, ProspectCity } from '@/components/ProspectPersonalization'
 import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
@@ -59,7 +60,7 @@ export default function PolitiqueConfidentialitePage() {
                 <div className="space-y-3 text-neutral-700">
                   <p>
                     La présente politique de confidentialité vous informe sur la manière dont{' '}
-                    {siteConfig.professional.name}, psychologue clinicienne, collecte, traite et
+                    <ProspectName fallback={siteConfig.professional.name} />, psychologue clinicienne, collecte, traite et
                     protège vos données personnelles, y compris les données de santé.
                   </p>
                   <p>
@@ -82,7 +83,7 @@ export default function PolitiqueConfidentialitePage() {
                   </p>
                   <ul className="list-none space-y-1 ml-4">
                     <li>
-                      <strong>Nom :</strong> {siteConfig.professional.name}
+                      <strong>Nom :</strong> <ProspectName fallback={siteConfig.professional.name} />
                     </li>
                     <li>
                       <strong>Profession :</strong> Psychologue Clinicienne
@@ -93,7 +94,7 @@ export default function PolitiqueConfidentialitePage() {
                     <li>
                       <strong>Adresse :</strong> {siteConfig.professional.address.street},{' '}
                       {siteConfig.professional.address.postalCode}{' '}
-                      {siteConfig.professional.address.city}
+                      <ProspectCity fallback={siteConfig.professional.address.city} />
                     </li>
                     <li>
                       <strong>Email :</strong>{' '}
@@ -263,7 +264,7 @@ export default function PolitiqueConfidentialitePage() {
                     <strong>strictement confidentielle</strong> et ne sont accessibles qu'à :
                   </p>
                   <ul className="list-disc pl-6 space-y-1">
-                    <li>{siteConfig.professional.name}, psychologue responsable du traitement</li>
+                    <li><ProspectName fallback={siteConfig.professional.name} />, psychologue responsable du traitement</li>
                     <li>
                       Personnel autorisé éventuel (secrétariat médical, sous obligation de
                       confidentialité)
@@ -426,7 +427,7 @@ export default function PolitiqueConfidentialitePage() {
                       <li>
                         <strong>Par courrier :</strong> {siteConfig.professional.address.street}
                         , {siteConfig.professional.address.postalCode}{' '}
-                        {siteConfig.professional.address.city}
+                        <ProspectCity fallback={siteConfig.professional.address.city} />
                       </li>
                     </ul>
                     <p className="text-xs text-neutral-600 mt-3">
@@ -567,7 +568,7 @@ export default function PolitiqueConfidentialitePage() {
                   <li>
                     <strong>Courrier :</strong> {siteConfig.professional.address.street},{' '}
                     {siteConfig.professional.address.postalCode}{' '}
-                    {siteConfig.professional.address.city}
+                    <ProspectCity fallback={siteConfig.professional.address.city} />
                   </li>
                 </ul>
               </Card>

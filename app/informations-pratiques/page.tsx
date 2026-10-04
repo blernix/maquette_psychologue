@@ -10,6 +10,11 @@ import Card from '@/components/Card'
 import InfoBox from '@/components/InfoBox'
 import Map from '@/components/Map'
 import { Button } from '@/components/Button'
+import {
+  ProspectName,
+  ProspectCity,
+  ProspectImage,
+} from '@/components/ProspectPersonalization'
 import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
@@ -20,7 +25,7 @@ export const metadata: Metadata = generatePageMetadata({
 })
 
 export default function InformationsPratiquesPage() {
-  const address = `${siteConfig.professional.address.street}, ${siteConfig.professional.address.postalCode} ${siteConfig.professional.address.city}`
+  const address = `${siteConfig.professional.address.street}, ${siteConfig.professional.address.postalCode} {ville}`
 
   return (
     <>
@@ -68,11 +73,13 @@ export default function InformationsPratiquesPage() {
                     Adresse du cabinet
                   </h2>
                   <address className="not-italic text-neutral-700 space-y-2">
-                    <p className="font-semibold">Cabinet Dr. Sophie Martin</p>
+                    <p className="font-semibold">
+                      <ProspectName fallback="Cabinet Dr. Sophie Martin" />
+                    </p>
                     <p>{siteConfig.professional.address.street}</p>
                     <p>
                       {siteConfig.professional.address.postalCode}{' '}
-                      {siteConfig.professional.address.city}
+                      <ProspectCity fallback={siteConfig.professional.address.city} />
                     </p>
                   </address>
                 </div>
@@ -206,9 +213,10 @@ export default function InformationsPratiquesPage() {
               Le cabinet
             </h2>
             <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-large">
-              <img
+              <ProspectImage
                 src="/images/cabinet.png"
-                alt="Cabinet de psychologie Dr. Sophie Martin à Lyon 3"
+                alt="Cabinet de psychologie {nom} à {ville}"
+                fallbackCity="Lyon 3"
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -219,7 +227,7 @@ export default function InformationsPratiquesPage() {
             <h2 className="text-3xl font-heading font-bold text-neutral-900 mb-6 text-center">
               Localisation
             </h2>
-            <Map address={address} title="Localisation du cabinet Dr. Sophie Martin" />
+            <Map address={address} title="Localisation du cabinet {nom}" />
           </div>
         </div>
       </section>

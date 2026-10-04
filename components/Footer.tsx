@@ -4,6 +4,7 @@
 
 import Link from 'next/link'
 import { siteConfig } from '@/lib/seo'
+import { ProspectName, ProspectCity } from './ProspectPersonalization'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -15,7 +16,7 @@ export default function Footer() {
           {/* Colonne 1 : À propos */}
           <div>
             <h2 className="text-lg font-heading font-semibold text-white mb-4">
-              Dr. Sophie Martin
+              <ProspectName fallback={siteConfig.professional.name} />
             </h2>
             <p className="text-sm text-neutral-300 mb-4">
               Psychologue clinicienne diplômée, je vous accompagne avec bienveillance
@@ -57,7 +58,7 @@ export default function Footer() {
                   {siteConfig.professional.address.street}
                   <br />
                   {siteConfig.professional.address.postalCode}{' '}
-                  {siteConfig.professional.address.city}
+                  <ProspectCity fallback={siteConfig.professional.address.city} />
                 </span>
               </p>
 
@@ -144,7 +145,8 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-neutral-700">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-neutral-400">
             <p>
-              © {currentYear} Dr. Sophie Martin - Psychologue. Tous droits réservés.
+              © {currentYear} <ProspectName fallback={siteConfig.professional.name} /> -
+              Psychologue. Tous droits réservés.
             </p>
             <p className="text-xs">
               Site conforme RGPD • Accessible WCAG 2.1 AA

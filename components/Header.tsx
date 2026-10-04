@@ -9,6 +9,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
+import { ProspectName } from './ProspectPersonalization'
 
 const navigation = [
   { name: 'Accueil', href: '/' },
@@ -46,7 +47,7 @@ export default function Header() {
             >
               <div>
                 <span className="text-xl md:text-2xl font-heading font-bold text-primary-500 group-hover:text-primary-600 transition-colors">
-                  Dr. Sophie Martin
+                  <ProspectName />
                 </span>
                 <p className="text-xs md:text-sm text-neutral-600">
                   Psychologue Clinicienne

@@ -3,7 +3,16 @@
 /**
  * Composant Map pour afficher une carte Google Maps
  * Utilise un iframe pour une solution simple et accessible
+ *
+ * Les jetons `{nom}` et `{ville}` dans `address` / `title` sont remplacés par
+ * l'identité du prospect issue de l'URL, sinon par la valeur fictive actuelle.
  */
+
+import {
+  PROSPECT_CITY_FALLBACK,
+  PROSPECT_NAME_FALLBACK,
+  useProspectIdentity,
+} from './ProspectPersonalization'
 
 export interface MapProps {
   address: string
@@ -14,8 +23,14 @@ export default function Map({
   address,
   title = 'Localisation du cabinet',
 }: MapProps) {
+  const { nom, ville } = useProspectIdentity()
+  const resolvedAddress = address
+    .split('{ville}')
+    .join(ville ?? PROSPECT_CITY_FALLBACK)
+  const resolvedTitle = title.split('{nom}').join(nom ?? PROSPECT_NAME_FALLBACK)
+
   // Encoder l'adresse pour l'URL
-  const encodedAddress = encodeURIComponent(address)
+  const encodedAddress = encodeURIComponent(resolvedAddress)
   const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${encodedAddress}`
 
   // URL pour ouvrir dans Google Maps
@@ -33,8 +48,8 @@ export default function Map({
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title={title}
-            aria-label={`Carte montrant l'emplacement : ${address}`}
+            title={resolvedTitle}
+            aria-label={`Carte montrant l'emplacement : ${resolvedAddress}`}
           />
         ) : (
           // Fallback si pas de clé API
@@ -59,7 +74,7 @@ export default function Map({
                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>
-            <p className="text-neutral-700 font-medium mb-2">{address}</p>
+            <p className="text-neutral-700 font-medium mb-2">{resolvedAddress}</p>
             <a
               href={openInMapsUrl}
               target="_blank"

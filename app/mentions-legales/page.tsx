@@ -7,6 +7,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Breadcrumb from '@/components/Breadcrumb'
 import Card from '@/components/Card'
+import { ProspectName, ProspectCity } from '@/components/ProspectPersonalization'
 import { generateMetadata as generatePageMetadata, siteConfig } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
@@ -40,7 +41,7 @@ export default function MentionsLegalesPage() {
               </h2>
               <div className="space-y-2 text-neutral-700">
                 <p>
-                  <strong>Nom :</strong> {siteConfig.professional.name}
+                  <strong>Nom :</strong> <ProspectName fallback={siteConfig.professional.name} />
                 </p>
                 <p>
                   <strong>Profession :</strong> Psychologue Clinicienne
@@ -57,7 +58,7 @@ export default function MentionsLegalesPage() {
                   {siteConfig.professional.address.street}
                   <br />
                   {siteConfig.professional.address.postalCode}{' '}
-                  {siteConfig.professional.address.city}
+                  <ProspectCity fallback={siteConfig.professional.address.city} />
                 </p>
                 <p>
                   <strong>Téléphone :</strong>{' '}
@@ -86,7 +87,7 @@ export default function MentionsLegalesPage() {
                 2. Directeur de publication
               </h2>
               <p className="text-neutral-700">
-                Le directeur de la publication du site est {siteConfig.professional.name}.
+                Le directeur de la publication du site est <ProspectName fallback={siteConfig.professional.name} />.
               </p>
             </Card>
 
@@ -119,7 +120,7 @@ export default function MentionsLegalesPage() {
               </h2>
               <div className="space-y-2 text-neutral-700">
                 <p>
-                  {siteConfig.professional.name} est psychologue clinicienne, inscrite au
+                  <ProspectName fallback={siteConfig.professional.name} /> est psychologue clinicienne, inscrite au
                   répertoire ADELI sous le numéro {siteConfig.professional.adeli}.
                 </p>
                 <p>
@@ -152,14 +153,14 @@ export default function MentionsLegalesPage() {
               <div className="space-y-3 text-neutral-700">
                 <p>
                   L'ensemble du contenu de ce site (textes, images, graphismes, logo, icônes,
-                  etc.) est la propriété exclusive de {siteConfig.professional.name}, à
+                  etc.) est la propriété exclusive de <ProspectName fallback={siteConfig.professional.name} />, à
                   l'exception des marques, logos ou contenus appartenant à d'autres sociétés
                   partenaires ou auteurs.
                 </p>
                 <p>
                   Toute reproduction, distribution, modification, adaptation, retransmission ou
                   publication de ces différents éléments est strictement interdite sans l'accord
-                  exprès par écrit de {siteConfig.professional.name}.
+                  exprès par écrit de <ProspectName fallback={siteConfig.professional.name} />.
                 </p>
                 <p>
                   Cette représentation ou reproduction, par quelque procédé que ce soit,
@@ -212,7 +213,7 @@ export default function MentionsLegalesPage() {
               </h2>
               <div className="space-y-3 text-neutral-700">
                 <p>
-                  {siteConfig.professional.name} s'efforce de fournir sur le site des
+                  <ProspectName fallback={siteConfig.professional.name} /> s'efforce de fournir sur le site des
                   informations aussi précises que possible. Toutefois, elle ne pourra être tenue
                   responsable des oublis, inexactitudes ou carences dans la mise à jour,
                   qu'elles soient de son fait ou du fait des tiers partenaires qui lui
@@ -224,7 +225,7 @@ export default function MentionsLegalesPage() {
                   personnalisée.
                 </p>
                 <p>
-                  {siteConfig.professional.name} ne pourra être tenue responsable en cas de
+                  <ProspectName fallback={siteConfig.professional.name} /> ne pourra être tenue responsable en cas de
                   force majeure ou du fait imprévisible et insurmontable d'un tiers.
                 </p>
               </div>
@@ -237,13 +238,13 @@ export default function MentionsLegalesPage() {
               </h2>
               <div className="space-y-3 text-neutral-700">
                 <p>
-                  Le site peut contenir des liens vers d'autres sites web. {siteConfig.professional.name}{' '}
+                  Le site peut contenir des liens vers d'autres sites web. <ProspectName fallback={siteConfig.professional.name} />{' '}
                   n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à
                   leur contenu.
                 </p>
                 <p>
                   La mise en place de liens hypertextes vers le présent site nécessite
-                  l'autorisation préalable et écrite de {siteConfig.professional.name}.
+                  l'autorisation préalable et écrite de <ProspectName fallback={siteConfig.professional.name} />.
                 </p>
               </div>
             </Card>
@@ -295,12 +296,12 @@ export default function MentionsLegalesPage() {
                 <li>
                   <strong>Par courrier :</strong>
                   <br />
-                  {siteConfig.professional.name}
+                  <ProspectName fallback={siteConfig.professional.name} />
                   <br />
                   {siteConfig.professional.address.street}
                   <br />
                   {siteConfig.professional.address.postalCode}{' '}
-                  {siteConfig.professional.address.city}
+                  <ProspectCity fallback={siteConfig.professional.address.city} />
                 </li>
               </ul>
             </Card>

@@ -11,6 +11,7 @@ import Testimonial from '@/components/Testimonial'
 import Card from '@/components/Card'
 import InfoBox from '@/components/InfoBox'
 import { Button } from '@/components/Button'
+import { ProspectName, ProspectCity } from '@/components/ProspectPersonalization'
 import { generateMetadata as generatePageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = generatePageMetadata({
@@ -26,14 +27,18 @@ export default function HomePage() {
       {/* Hero Section */}
       <Hero
         title="Bienvenue dans votre espace de bien-être"
-        subtitle="Dr. Sophie Martin, Psychologue Clinicienne"
+        subtitle={
+          <>
+            <ProspectName />, Psychologue Clinicienne
+          </>
+        }
         description="Je vous accompagne avec bienveillance et professionnalisme dans vos difficultés personnelles, relationnelles et émotionnelles."
         ctaText="Prendre rendez-vous"
         ctaHref="/prendre-rendez-vous"
         secondaryCtaText="En savoir plus"
         secondaryCtaHref="/qui-suis-je"
         imageSrc="/images/psychologue.png"
-        imageAlt="Dr. Sophie Martin, Psychologue Clinicienne à Lyon"
+        imageAlt="{nom}, Psychologue Clinicienne à {ville}"
       />
 
       {/* Section Présentation courte */}
@@ -45,8 +50,9 @@ export default function HomePage() {
             </h2>
             <div className="space-y-4 text-lg text-neutral-700 leading-relaxed">
               <p>
-                Psychologue clinicienne diplômée, j'exerce en cabinet libéral à Lyon 3ème
-                depuis plus de 10 ans. Ma pratique est fondée sur l'écoute, la bienveillance
+                Psychologue clinicienne diplômée, j'exerce en cabinet libéral à{' '}
+                <ProspectCity fallback="Lyon 3ème" /> depuis plus de 10 ans. Ma pratique est
+                fondée sur l'écoute, la bienveillance
                 et le respect de votre rythme.
               </p>
               <p>
@@ -359,7 +365,7 @@ export default function HomePage() {
                 <p className="text-neutral-700">
                   25 rue de la République
                   <br />
-                  69003 Lyon
+                  69003 <ProspectCity />
                 </p>
                 <p className="text-sm text-neutral-600 mt-2">
                   Métro : Ligne B - Place Guichard

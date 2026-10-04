@@ -8,6 +8,7 @@ import { Inter, Nunito } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import ProspectPersonalization from '@/components/ProspectPersonalization'
 import { siteConfig, generateLocalBusinessSchema } from '@/lib/seo'
 
 // Configuration des polices Google
@@ -106,6 +107,8 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col">
+        {/* Personnalisation client depuis les paramètres d'URL (nom, ville, prenom) */}
+        <ProspectPersonalization />
         <Header />
 
         <main id="main-content" className="flex-1">
