@@ -12,6 +12,7 @@ import {
   ProspectEmail,
   ProspectAddress,
   ProspectAddressInline,
+  ProspectRegion,
   ProspectPhone,
   IfProspectAddress,
   IfProspectPhone,
@@ -138,8 +139,8 @@ export default function MentionsLegalesPage() {
                   </li>
                 </ul>
                 <p className="mt-4">
-                  <strong>Autorité de tutelle :</strong> Agence Régionale de Santé (ARS)
-                  Auvergne-Rhône-Alpes
+                  <strong>Autorité de tutelle :</strong> Agence Régionale de Santé (ARS){' '}
+                  <ProspectRegion fallback={siteConfig.professional.address.region} />
                 </p>
               </div>
             </Card>

@@ -73,6 +73,7 @@ export function useProspectIdentity(): ProspectIdentity {
         code_postal: sanitize(params.get('cp') ?? params.get('code_postal')),
         tel: sanitize(params.get('tel')),
         acces: sanitize(params.get('acces')),
+        region: sanitize(params.get('region')),
       }
       const active = Object.values(next).some((value) => value !== null)
       if (active) {
@@ -121,6 +122,21 @@ export function ProspectStreet({ fallback }: { fallback: string }) {
 export function ProspectPostal({ fallback }: { fallback: string }) {
   const { code_postal } = useProspectIdentity()
   return <>{code_postal ?? fallback}</>
+}
+
+/**
+ * Région d'exercice (`?region=`).
+ *
+ * - `?region=` fourni : cette région s'affiche.
+ * - Page personnalisée sans région : rien (jamais de région déduite de la
+ *   ville).
+ * - Aucun paramètre : région de démonstration d'origine, contenu intact.
+ */
+export function ProspectRegion({ fallback }: { fallback: string }) {
+  const { region, active } = useProspectIdentity()
+  if (region) return <>{region}</>
+  if (active) return null
+  return <>{fallback}</>
 }
 
 /**
@@ -409,7 +425,12 @@ function applyIdentityToDocument(identity: ProspectIdentity) {
         // Adresse : reconstruite uniquement à partir de ce qui est connu, pour
         // ne jamais laisser traîner la rue, le code postal ou la région de la
         // ville de démonstration sur une page personnalisée.
-        if (identity.adresse || identity.ville || identity.code_postal) {
+        if (
+          identity.adresse ||
+          identity.ville ||
+          identity.code_postal ||
+          identity.region
+        ) {
           const country = data.address?.addressCountry
           data.address = {
             '@type': 'PostalAddress',
@@ -418,6 +439,7 @@ function applyIdentityToDocument(identity: ProspectIdentity) {
           if (identity.adresse) data.address.streetAddress = identity.adresse
           if (identity.ville) data.address.addressLocality = identity.ville
           if (identity.code_postal) data.address.postalCode = identity.code_postal
+          if (identity.region) data.address.addressRegion = identity.region
         } else {
           delete data.address
         }

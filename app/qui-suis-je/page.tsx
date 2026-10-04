@@ -68,7 +68,7 @@ export default function QuiSuisJePage() {
                     <p>
                       <strong>N° ADELI :</strong>
                       <br />
-                      [À REMPLIR]
+                      {siteConfig.professional.adeli}
                     </p>
                     <p>
                       <strong>Diplôme :</strong>

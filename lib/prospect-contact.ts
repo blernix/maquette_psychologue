@@ -7,6 +7,7 @@ export type ProspectField =
   | 'code_postal'
   | 'tel'
   | 'acces'
+  | 'region'
 
 export interface ProspectIdentity {
   nom: string | null
@@ -17,6 +18,8 @@ export interface ProspectIdentity {
   code_postal: string | null
   tel: string | null
   acces: string | null
+  /** Région d'exercice (ex. « Auvergne-Rhône-Alpes »), jamais déduite. */
+  region: string | null
   /** Vrai dès qu'au moins un paramètre reconnu est fourni dans l'URL. */
   active: boolean
 }
@@ -55,6 +58,7 @@ export const EMPTY_PROSPECT_IDENTITY: ProspectIdentity = {
   code_postal: null,
   tel: null,
   acces: null,
+  region: null,
   active: false,
 }
 
